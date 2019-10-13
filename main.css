@@ -1,0 +1,66 @@
+html,body {
+    padding: 0;
+    margin: 0;
+}
+
+.wrapper {
+    border: 1px solid brown;
+    margin: 0 auto;
+    height: 33vh;
+    width: 99%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.ai-choice {
+    border:1px solid magenta;
+}
+
+.ai-choice span {
+    background: greenyellow;
+    height: 100px;
+    width: 100px;
+    display: block;
+}
+
+.score {
+    border: 1px solid green;
+}
+
+.user-choice {
+    border: 1px solid red;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+}
+
+input[type='radio'] {
+    display: none;
+}
+
+label {
+    border: 1px solid blue; 
+    background: lightgrey;
+    width: 100px;
+    height: 100px;
+}
+
+label[for="rock"]:after{
+    content: "rock";
+}
+label[for="paper"]:after{
+    content: "paper";
+}
+label[for="scissors"]:after{
+    content: "scissors";
+}
+
+
+input[type='radio']:checked + label {
+    width: 120px;
+    height: 120px;
+}

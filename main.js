@@ -3,8 +3,11 @@ const chooseFrom = ['rock','paper','scissors']; // list to choose from
 
 const chosenItem = ()=> chooseFrom[Math.floor(Math.random() * chooseFrom.length)]; // random selection of a number [0,1,2]
 
-const aiChoice = ()=> document.getElementById('aiweapon').innerText = chosenItem(); // selection swapping for AI
-
+const aiChoice = ()=> {
+    let selectionTextAndImage = chosenItem();
+    document.getElementById('aiweapon').style.content=('url(' + selectionTextAndImage + '.png');  // selection swapping for AI
+    return selectionTextAndImage;
+}
 let aiThinking; // variable that will hold our interval for AI selection swapping
 
 const doThinking = (param) => {
@@ -46,6 +49,8 @@ const checkWinner = (aiOption, playerOption)=> {
     }
 }
 
+const options = document.getElementsByName('option'); // get all radio buttons
+
 const resetOptions = ()=> {
     for(let i=0 ; i < options.length; i++) {
         options[i].checked = false // we uncheck radio button
@@ -56,39 +61,51 @@ const resetOptions = ()=> {
     doThinking(true);
 }
 
+
+
+
 /*  -----------   Gameplay   -----------  */
 
-setScore(aiScore,playerScore) // set initial score 0-0 in HTML
-
-doThinking(true) //start AI thinking
-
-
-let computerCounter = 0 // for debugging purposes 
-let playerCounter = 0  // for debugging purposes 
-
-
-const options = document.getElementsByName('option'); // get all radio buttons
-
-
-for(let i=0 ; i < options.length; i++) {
-    // console.log(options[i])
-    options[i].onclick = async function() { // add event listener on click and calls an anonymous async function
-        console.log('here the AI halts'); // for debugging purposes
-        doThinking(false); // when player makes a selection, AI stops thinking
-        let aiChoiceNow = aiChoice(); // but makes a new selection, just to be shure.
-        document.getElementById('body').style.pointerEvents="none"; // disables click
-        computerCounter++; // debugging code
-        playerCounter++; // debugging code
-        console.log(`[${computerCounter}] Computer choice is ${aiChoiceNow}`); // debugging code
-        console.log(`[${playerCounter}] Your choice is ${this.value}`); // debugging code
-        checkWinner(aiChoiceNow, this.value); // call checkWinner func to eval winner and prints message to HTML
-        setScore(aiScore,playerScore); // and we update score in HTML
-
-        await new Promise((resolve, reject) => {
-            setTimeout(resetOptions, 3000)
-          });
+const gameOn = ()=> {
+    setScore(aiScore,playerScore); // set initial score 0-0 in HTML
+    doThinking(true); //start AI thinking
+    let computerCounter = 0; // for debugging purposes 
+    let playerCounter = 0;  // for debugging purposes 
+    for(let i=0 ; i < options.length; i++) {
+        // console.log(options[i])
+        options[i].onclick = async function() { // add event listener on click and calls an anonymous async function
+            console.log('here the AI halts'); // for debugging purposes
+            doThinking(false); // when player makes a selection, AI stops thinking
+            let aiChoiceNow = aiChoice(); // but makes a new selection, just to be shure.
+            document.getElementById('body').style.pointerEvents="none"; // disables click
+            computerCounter++; // debugging code
+            playerCounter++; // debugging code
+            console.log(`[${computerCounter}] Computer choice is ${aiChoiceNow}`); // debugging code
+            console.log(`[${playerCounter}] Your choice is ${this.value}`); // debugging code
+            checkWinner(aiChoiceNow, this.value); // call checkWinner func to eval winner and prints message to HTML
+            setScore(aiScore,playerScore); // and we update score in HTML
+    
+            await new Promise((resolve, reject) => {
+                setTimeout(resetOptions, 3000)
+              });
+        }
     }
-    }
+}
+
+
+
+gameOn();
+
+
+
+
+
+
+
+
+
+
+
 
 
 

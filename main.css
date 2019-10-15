@@ -1,6 +1,11 @@
 html,body {
     padding: 0;
     margin: 0;
+    /* pointer-events: none; */
+}
+
+.ai-weapon {
+    content: url();
 }
 
 .wrapper {
@@ -50,13 +55,13 @@ label {
 }
 
 label[for="rock"]:after{
-    content: "rock";
+    content: url(rock.png);
 }
 label[for="paper"]:after{
-    content: "paper";
+    content: url(paper.png);
 }
 label[for="scissors"]:after{
-    content: "scissors";
+    content: url(scissors.png);
 }
 
 

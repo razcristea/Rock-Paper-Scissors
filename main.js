@@ -1,3 +1,4 @@
+// 'use strict'; /* not working properly when strict enabled */
 const chooseFrom = ['rock','paper','scissors']; // list to choose from 
 
 const chosenItem = ()=> chooseFrom[Math.floor(Math.random() * chooseFrom.length)]; // random selection of a number [0,1,2]
@@ -45,6 +46,15 @@ const checkWinner = (aiOption, playerOption)=> {
     }
 }
 
+const resetOptions = ()=> {
+    for(option in options) {
+        options[option].checked = false // we uncheck radio button
+        document.getElementById('result').innerText = '' // and remove result text from screen
+    };
+    console.log('this is where the resets are happening');
+    document.getElementById('body').style.pointerEvents="all"; // re-enable click
+    doThinking(true);
+}
 
 /*  -----------   Gameplay   -----------  */
 
@@ -60,27 +70,28 @@ let playerCounter = 0  // for debugging purposes
 const options = document.getElementsByName('option'); // get all radio buttons
 
 for(option in options) {
-    options[option].onclick = function() { // add event listener on click
+    options[option].onclick = async function() { // add event listener on click and calls an anonymous async function
+        console.log('here the AI halts'); // for debugging purposes
         doThinking(false); // when player makes a selection, AI stops thinking
         let aiChoiceNow = aiChoice(); // but makes a new selection, just to be shure.
+        document.getElementById('body').style.pointerEvents="none"; // disables click
         computerCounter++; // debugging code
         playerCounter++; // debugging code
         console.log(`[${computerCounter}] Computer choice is ${aiChoiceNow}`); // debugging code
         console.log(`[${playerCounter}] Your choice is ${this.value}`); // debugging code
-        checkWinner(aiChoiceNow, this.value); // call checkWinner func to eval winner and prints message to HRML
+        checkWinner(aiChoiceNow, this.value); // call checkWinner func to eval winner and prints message to HTML
         setScore(aiScore,playerScore); // and we update score in HTML
+
+        await new Promise((resolve, reject) => {
+            setTimeout(resetOptions, 3000)
+          });
     }
 }
 
 
-const resetOptions = ()=> {
-    for(option in options) {
-        options[option].checked = false // we uncheck radio button
-        document.getElementById('result').innerText = '' // and remove result text from screen
-    };
-}
 
-setInterval(resetOptions, 3000); //...with a delay of 3 seconds
 
-// now AI should start thinking again...
+
+
+
 

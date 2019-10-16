@@ -85,7 +85,7 @@ const gameOn = ()=> {
     let playerCounter = 0;  // for debugging purposes 
     for(let i=0 ; i < options.length; i++) {
         // console.log(options[i])
-        options[i].onclick = async function() { // add event listener on click and calls an anonymous async function
+        options[i].onclick = function() { // add event listener on click and calls an anonymous function
             console.log('here the AI halts'); // for debugging purposes
             doThinking(false); // when player makes a selection, AI stops thinking
             let aiChoiceNow = aiChoice(); // but makes a new selection, just to be shure.
@@ -96,10 +96,7 @@ const gameOn = ()=> {
             console.log(`[${playerCounter}] Your choice is ${this.value}`); // debugging code
             checkWinner(aiChoiceNow, this.value); // call checkWinner func to eval winner and prints message to HTML
             setScore(aiScore,playerScore); // and we update score in HTML
-    
-            await new Promise((resolve, reject) => {
-                setTimeout(resetOptions, 3000) // call reset function with a delay of 3s
-              });
+            setTimeout(resetOptions, 3000); // call reset function with a delay of 3s
         }
     }
 }

@@ -27,25 +27,37 @@ const setScore = (aiScore,playerScore) => {
 } // sets score and puts it in HTML
 
 const checkWinner = (aiOption, playerOption)=> {
+    let result = document.getElementById('result')
     if(aiOption === playerOption) {
         console.log('It\'s a tie! Both players chose ' + playerOption)
-        document.getElementById('result').innerText = `It's a tie! Both players chose ${playerOption}.`
+        result.innerText = `It's a tie! Both players chose ${playerOption}.`
+        result.style.color = 'goldenrod';
     } else if (playerOption === 'rock' && aiOption === 'scissors') {
         console.log('You win! Rock breaks scissors.')
-        document.getElementById('result').innerText = 'You win! Rock breaks scissors.'
+        result.innerText = 'You win! Rock breaks scissors.'
+        result.style.color = 'green';
         playerScore++
     } else if (playerOption === 'scissors' && aiOption === 'paper') {
         console.log('You win! Scissors cut paper.')
-        document.getElementById('result').innerText = 'You win! Scissors cut paper.'
+        result.innerText = 'You win! Scissors cuts paper.'
+        result.style.color = 'green';
         playerScore++
     } else if (playerOption === 'paper' && aiOption === 'rock') {
         console.log('You win! Paper covers rock.')
-        document.getElementById('result').innerText = 'You win! Paper covers rock.'
+        result.innerText = 'You win! Paper covers rock.'
+        result.style.color = 'green';
         playerScore++
     } else {
-        console.log('You lose!')
-        document.getElementById('result').innerText = 'You lose!'
-        aiScore++
+        console.log('You lose!');
+        result.style.color = 'red';
+        aiScore++;
+        if (aiOption === 'rock') {
+            result.innerText = `You lose! ${aiOption[0].toUpperCase()+aiOption.slice(1)} breaks ${playerOption}.`;
+        } else if (aiOption === 'paper') {
+            result.innerText = `You lose! ${aiOption[0].toUpperCase()+aiOption.slice(1)} covers ${playerOption}.`;
+        } else if (aiOption === 'scissors') {
+            result.innerText = `You lose! ${aiOption[0].toUpperCase()+aiOption.slice(1)} cuts ${playerOption}.`;
+        }
     }
 }
 
@@ -86,7 +98,7 @@ const gameOn = ()=> {
             setScore(aiScore,playerScore); // and we update score in HTML
     
             await new Promise((resolve, reject) => {
-                setTimeout(resetOptions, 3000)
+                setTimeout(resetOptions, 3000) // call reset function with a delay of 3s
               });
         }
     }

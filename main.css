@@ -1,17 +1,27 @@
 html,body {
     padding: 0;
     margin: 0;
-    /* pointer-events: none; */
+    /* pointer-events: none;  */ /* will be enabled when AI stops thinking and resumed afterwards */ 
 }
 
-.ai-weapon {
-    content: url();
+h5 {
+    font-size: 16px;
+    color: hsl(0, 0%, 100%);
+    background: hsla(115, 61%, 32%, 0.774);
+    padding: 5px 20px;
+    border-radius: 18px;
+    box-shadow: 
+    inset 5px 5px 10px 10px hsla(0, 0%, 50%, 0.2),
+    inset 1px 1px 1px 1px hsla(0, 0%, 100%,0.3), 
+    10px 10px 30px -10px hsla(0, 0%, 0%, 0.3),
+    5px 5px 6px -1px hsla(0, 0%, 0%, 0.3);
 }
 
 .wrapper {
-    border: 1px solid brown;
+    /* border: 1px solid brown; */
     margin: 0 auto;
-    height: 33vh;
+    height: 30vh;
+    min-height: 130px;
     width: 99%;
     max-width: 500px;
     display: flex;
@@ -21,25 +31,34 @@ html,body {
 }
 
 .ai-choice {
-    border:1px solid magenta;
+    /* border:1px solid magenta; */
+    user-select: none; /* prevent user from selecting the png inside */
 }
 
 .ai-choice span {
-    background: greenyellow;
+    /* background: greenyellow; */
     height: 100px;
     width: 100px;
     display: block;
 }
 
+#result {
+    height: 18px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
 .score {
-    border: 1px solid green;
+    /* border: 1px solid green; */
+    transform: translateX(-15px);
 }
 
 .user-choice {
-    border: 1px solid red;
+    /* border: 1px solid red; */
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 16px 0;
     width: 90%;
 }
 
@@ -48,8 +67,8 @@ input[type='radio'] {
 }
 
 label {
-    border: 1px solid blue; 
-    background: lightgrey;
+    /* border: 1px solid blue;  */
+    /* background: lightgrey; */
     width: 100px;
     height: 100px;
 }
@@ -66,6 +85,16 @@ label[for="scissors"]:after{
 
 
 input[type='radio']:checked + label {
-    width: 120px;
-    height: 120px;
+    filter: drop-shadow(3px 3px 2px hsl(120, 60%, 25%)) ; 
+    transform: rotate(405deg);
+    transition: transform 0.6s linear;
+}
+input[type='radio']:not(:checked) + label {
+    opacity: 0.6;
+}
+
+#ai-score, #player-score {
+    font-size: 18px;
+    font-weight: 700;
+    padding: 0 8px;
 }
